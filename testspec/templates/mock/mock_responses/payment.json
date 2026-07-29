@@ -1,0 +1,39 @@
+[
+  {
+    "url": "https://pay.example.com/api/charge",
+    "method": "POST",
+    "status": 200,
+    "json": {
+      "code": 0,
+      "message": "success",
+      "data": {
+        "transaction_id": "TXN-MOCK-001",
+        "status": "paid",
+        "amount": 199.00
+      }
+    }
+  },
+  {
+    "url": "https://pay.example.com/api/refund",
+    "method": "POST",
+    "status": 200,
+    "json": {
+      "code": 0,
+      "message": "success",
+      "data": {
+        "refund_id": "REF-MOCK-001",
+        "status": "refunded"
+      }
+    }
+  },
+  {
+    "url": "https://pay.example.com/api/charge",
+    "method": "POST",
+    "status": 500,
+    "json": {
+      "code": 500,
+      "message": "internal error"
+    },
+    "_comment": "此条目用于测试支付失败场景，使用时需要修改 URL 匹配规则"
+  }
+]

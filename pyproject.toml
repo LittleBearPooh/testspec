@@ -1,0 +1,112 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "testspec"
+description = "Spec-First Test Automation Engineering Framework — 规格优先的测试自动化工程化框架"
+readme = "README.md"
+requires-python = ">=3.9"
+license = "MIT"
+authors = [
+    {name = "Zhou Lin", email = "1217771746@qq.com"},
+]
+dynamic = ["version"]
+keywords = ["testing", "automation", "spec-first", "scaffold", "pytest"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Software Development :: Testing",
+    "Topic :: Software Development :: Code Generators",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.4",
+    "pytest-cov>=4.1",
+    "ruff>=0.4",
+    "mypy>=1.10",
+]
+
+[project.scripts]
+testspec = "testspec.cli:main"
+
+[project.entry-points."testspec.sections"]
+# Third-party plugins register here. Example:
+# my_section = "my_package.sections:MyCustomSection"
+
+[project.urls]
+Homepage = "https://github.com/testspec/testspec"
+Documentation = "https://github.com/testspec/testspec#readme"
+Issues = "https://github.com/testspec/testspec/issues"
+
+[tool.setuptools.packages.find]
+include = ["testspec*"]
+
+[tool.setuptools.package-data]
+testspec = ["templates/**/*"]
+
+[tool.setuptools.dynamic]
+version = {attr = "testspec.constants.VERSION"}
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+addopts = "-ra"
+
+[tool.coverage.run]
+source = ["testspec"]
+branch = true
+omit = ["testspec/__pycache__/*"]
+
+[tool.coverage.report]
+show_missing = true
+fail_under = 80
+exclude_lines = [
+    "pragma: no cover",
+    "if __name__ == .__main__.",
+    "if TYPE_CHECKING:",
+]
+
+[tool.ruff]
+target-version = "py39"
+line-length = 100
+
+[tool.ruff.lint]
+select = [
+    "E",   # pycodestyle errors
+    "W",   # pycodestyle warnings
+    "F",   # pyflakes
+    "I",   # isort
+    "B",   # flake8-bugbear
+    "UP",  # pyupgrade
+]
+ignore = [
+    "E501",  # line too long (handled by formatter)
+]
+
+[tool.ruff.lint.isort]
+known-first-party = ["testspec"]
+
+[tool.mypy]
+python_version = "3.9"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = false
+ignore_missing_imports = true
+show_error_codes = true
+strict_optional = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+
+[[tool.mypy.overrides]]
+module = "testspec.*"
+disallow_untyped_defs = true
